@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Exception;
 
 class BookController extends Controller
 {
@@ -15,7 +16,6 @@ class BookController extends Controller
      */
     public function index()
     {
-        // return Book::first()->get();
         return Book::first()->paginate(5);
     }
 
@@ -25,10 +25,15 @@ class BookController extends Controller
     }
 
     public function getById($id){
-        return Book::find($id);
-    }
+        try {
 
-    
+            $book = Book::find($id);
+            return response()->json(['messaje'=>'success','book'=> $book,'user'=> $book->user]);
+
+        } catch (Exception $e) {
+            return response()->json(['messaje'=> $e->getMessage()]);
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,11 +41,18 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
-     public function store(Request $request)
+    public function store(Request $request,$author_id)
     {
-       Book::create($request->all());
-       return 'Done';
+        try {
+            $book = Book::create($request->all());
+            $book->author()->attach($author_id);
+
+            return response()->json(['messaje'=> 'New Book created','book'=> $book,'author'=>$book->author]);
+
+        } catch (Exception $e) {
+            return response()->json(['messaje'=> $e->getMessage()]);
+        }
+
     }
 
     /**
@@ -61,7 +73,7 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(Request $request)
     {
         Book::where('id', $request->id)->update($request->all());
     }

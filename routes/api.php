@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\BookController as Book;
-use App\Http\Controllers\Api\V1\ActorsController as Actors;
+use App\Http\Controllers\AuthorController as Author;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,19 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::get('books',[Book::class, 'index']);
 Route::get('books/title={value}',[Book::class, 'getByTitle']);
-Route::get('books/{id}',[Book::class, 'getById']);
-Route::post('books',[Book::class, 'store']);
-Route::delete('books/{id}',[Book::class, 'destroy']);
-Route::put('books',[Book::class, 'update']);
+Route::get('books/{id}',[Book::class,'getById']);
+Route::post('books/{author_id}',[Book::class, 'store']);
+// Route::post('books',[Book::class, 'store']);
+Route::delete('books/{id}', [Book::class, 'destroy']);
+Route::put('books', [Book::class, 'update']);
 
-// Route::get('actors',[Actors::class, 'index']);
-// Route::get('actors/title={value}',[Actors::class, 'getByTitle']);
-// Route::get('actors/{id}',[Actors::class, 'getById']);
-// Route::pot('actors',[Actors::class, 'store']);
-// Route::delete('actors/{id}',[Actors::class, 'destroy']);
-// Route::put('actors',[Actors::class, 'update']);
-
-
+Route::get('authors', [ Author::class, 'index']);

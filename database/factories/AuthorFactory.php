@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Actors>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Author>
  */
-class ActorsFactory extends Factory
+class AuthorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,8 +19,7 @@ class ActorsFactory extends Factory
         return [
             'name' => fake()->name(),
             'city' => fake()->city(),
-            'dni' => fake()->dni(), 
-
+            'dni' => fake()->dni(),
         ];
     }
 }
