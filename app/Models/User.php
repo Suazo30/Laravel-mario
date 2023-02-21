@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -44,5 +45,9 @@ class User extends Authenticatable
 
     public function book (){
         return $this->hasMany(Book::class);
+    }
+
+    public function role (){
+        return $this->belongsTo(Role::class);
     }
 }
